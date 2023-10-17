@@ -5,17 +5,19 @@ import java.util.Date;
 import java.util.List;
 
 //O camera are numar, pret pe noapte, numar de persoane care pot fi cazate si o lista de rezervari
-public class Room {
+public class Room  {
     Integer roomNumber;
     Double pricePerRoom;
     Integer noPersonByRoom;
-    List<Date> reservation;
+    List<Reservation> reservation;
+    Availability availability;
 
-    public Room(Integer roomNumber, Double pricePerRoom, Integer noPersonByRoom) {
+    public Room(Integer roomNumber, Double pricePerRoom, Integer noPersonByRoom, Availability availability) {
         this.roomNumber = roomNumber;
         this.pricePerRoom = pricePerRoom;
         this.noPersonByRoom = noPersonByRoom;
         this.reservation = new ArrayList<>();
+        this.availability = availability;
     }
 
     public Integer getRoomNumber() {
@@ -42,11 +44,23 @@ public class Room {
         this.noPersonByRoom = noPersonByRoom;
     }
 
-    public List<Date> getReservation() {
+    public List<Reservation> getReservation() {
         return reservation;
     }
 
-    public void setReservation(List<Date> reservation) {
+    public void setReservation(List<Reservation> reservation) {
+
         this.reservation = reservation;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "roomNumber=" + roomNumber +
+                ", pricePerRoom=" + pricePerRoom +
+                ", noPersonByRoom=" + noPersonByRoom +
+                ", reservation=" + reservation +
+                ", availability=" + availability +
+                '}';
     }
 }

@@ -21,8 +21,58 @@ package org.example;
 //•	Faca o rezervare pentru o anumita camera
 //Dupa ce aceasta versiune a aplicatiei functioneaza, permite ca in aplicatie sa existe mai multe hoteluri. Administratorul va putea adauga si hotel in aplicatie.
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 public class Main {
     public static void main(String[] args) {
-  
+        Room room1= new Room(205, 100.25, 2, Availability.YES);
+        Room room2 = new Room(206, 100.25, 2, Availability.YES);
+        Room room3 = new Room(207, 100.25, 2, Availability.NO);
+        Room room4= new Room(208, 100.25, 2, Availability.YES);
+        Room room5 = new Room(209, 100.25, 4, Availability.NO);
+        Room room6 = new Room(210, 100.25, 2, Availability.YES);
+        Room room7= new Room(205, 100.25, 1, Availability.YES);
+
+        List<Room> rooms = new ArrayList<>(List.of(room1, room2, room3, room4, room5, room6));
+
+        UserAdministrator userAdministrator = new UserAdministrator(rooms);
+
+        //adauga camera in lista de camere
+        userAdministrator.addRoom(room7);
+        System.out.println(rooms);
+        System.out.println("------------------");
+
+
+        //sterg o camera din lista de camere
+            // nu imi sterge camera
+
+        userAdministrator.deleteRoom(room2);
+        System.out.println(rooms);
+        System.out.println("------------------");
+
+        ////•	Vizualizare camere
+            //afiseaza camerele
+
+        userAdministrator.viewRoom();
+        System.out.println(rooms);
+        System.out.println("------------------");
+
+        ////•	Editare pret camera
+            //modfifica pretul pe camera
+        userAdministrator.pricePerRoom(room3, 150);
+        System.out.println(rooms);
+        System.out.println("------------------");
+
+        ////•	Sa vada cate camere sunt libere/ocupate pentru o anumita perioada
+            //nu afiseaza corect
+        userAdministrator.viewAvailabilityRoom();
+        System.out.println(rooms);
+        System.out.println("------------------");
+
+
+
+
     }
 }

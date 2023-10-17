@@ -6,10 +6,10 @@ public class Reservation {
     private int reservationNo;
     private Room reservedNo;
     private UserClient user;
-    private Date checkIn;
-    private Date checkOut;
+    private int checkIn;
+    private int checkOut;
 
-    public Reservation(int reservationNo, Room reservedNo, UserClient user, Date checkIn, Date checkOut) {
+    public Reservation(int reservationNo, Room reservedNo, UserClient user, int checkIn, int checkOut) {
         this.reservationNo = reservationNo;
         this.reservedNo = reservedNo;
         this.user = user;
@@ -41,19 +41,19 @@ public class Reservation {
         this.user = user;
     }
 
-    public Date getCheckIn() {
+    public int getCheckIn() {
         return checkIn;
     }
 
-    public void setCheckIn(Date checkIn) {
+    public void setCheckIn(int checkIn) {
         this.checkIn = checkIn;
     }
 
-    public Date getCheckOut() {
+    public int getCheckOut() {
         return checkOut;
     }
 
-    public void setCheckOut(Date checkOut) {
+    public void setCheckOut(int checkOut) {
         this.checkOut = checkOut;
     }
 }

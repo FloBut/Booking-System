@@ -1,4 +1,7 @@
 package org.example;
+
+import java.util.List;
+
 ////Un utilizator are o lista de rezervari, nume, prenume.
 ////Clinetii vor putea sa:
 ////•	Vada disponibilitatile (camerele libere) pentru o anumita perioada si un anumit numar de locuri
@@ -7,10 +10,10 @@ package org.example;
 ////•	Faca o rezervare pentru o anumita camera
 public class UserClient {
     private String nume;
-    private Reservation reservation;
+    private List<Reservation> reservation;
 
-    public UserClient(String nume, Reservation reservation) {
-        this.nume = nume;
+    public UserClient(String name) {
+        this.nume = name;
         this.reservation = reservation;
     }
 
@@ -22,11 +25,11 @@ public class UserClient {
         this.nume = nume;
     }
 
-    public Reservation getReservation() {
+    public List<Reservation> getReservation() {
         return reservation;
     }
 
-    public void setReservation(Reservation reservation) {
+    public void setReservation(List<Reservation> reservation) {
         this.reservation = reservation;
     }
 }
