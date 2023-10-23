@@ -1,11 +1,8 @@
 package org.example;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 ////Administratorii de hotel vor putea sa:
 ////•	Managerieze camerele
@@ -82,7 +79,7 @@ public class UserAdministrator {
     //si cum stii ca o camera este rezervata?
     //pai daca in lista de rezervari a camerei gasesti o rezervare care sa aiba checkout-ul dupa start si checkin-ul inainte de end
 
-    public List<Reservation>  getAvailabilityRoom (int reservedNo, LocalDate checkIn, LocalDate checkOut) {
+    public List<Reservation>  getAvailabilityRoom (int reservedNo, LocalDateTime checkIn, LocalDateTime checkOut) {
         List<Reservation>  availabilityRoom = new ArrayList<>();
         //parcurg mai intai lista de camere si camere si apoi
         //parcurg lista de rezervari si verific daca exita o rezervare in perioada repectiva atunci adug in lista
@@ -90,9 +87,12 @@ public class UserAdministrator {
         // rezervarea sa aiba check in si check out egale cu datele date ca parametru
 
         for (int i = 0; i < reservations.size(); i++) {
-           if (reservations.get(i).getReservedNo().equals(reservedNo);
-            if (!(reservations.get(i).getCheckIn().equals(checkIn) && reservations.get(i).getCheckOut().equals(checkOut))) {
-                availabilityRoom.add(reservations.get(i));
+            if (reservations.size() - 1 != 0) {
+                if (reservations.get(i).getReservedNo().equals(reservedNo)) {
+                    if (!(reservations.get(i).getCheckIn().equals(checkIn) && reservations.get(i).getCheckOut().equals(checkOut))) {
+                        availabilityRoom.add(reservations.get(i));
+                    }
+                }
             }
         }
        return availabilityRoom;
@@ -103,6 +103,10 @@ public class UserAdministrator {
         //ar trebui sa verific care sunt camerele care sunt rezervate in acea perioada si fac o suma totala pe acele camere
         //cum fac asta?
 
+    //adica trebuie sa gasesti inainte rezervarile care sunt intr-o anumite perioada si apoi sa calculezi pretul
+
+    //pentru pretul rezervarilor dintr-o anumita perioada
+    //e cam similar
     //adica trebuie sa gasesti inainte rezervarile care sunt intr-o anumite perioada si apoi sa calculezi pretul
 
 

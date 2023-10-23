@@ -82,7 +82,7 @@ public class Main {
         ////•	Sa vada cate camere sunt libere/ocupate pentru o anumita perioada
             // deci ar trebui sa nu imi afiseze camera 3, 207, pentru ca nu este disponibila in acea perioada
 
-        userAdministrator.getAvailabilityRoom(001 LocalDate.parse("2023-01-07").atStartOfDay(), LocalDate.parse("2023-01-15").atStartOfDay());
+        userAdministrator.getAvailabilityRoom(001,  LocalDate.parse("2023-01-07").atStartOfDay(), LocalDate.parse("2023-01-15").atStartOfDay());
         System.out.println(reservations);
         System.out.println("------------------");
 
