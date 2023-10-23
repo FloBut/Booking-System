@@ -21,6 +21,8 @@ package org.example;
 //•	Faca o rezervare pentru o anumita camera
 //Dupa ce aceasta versiune a aplicatiei functioneaza, permite ca in aplicatie sa existe mai multe hoteluri. Administratorul va putea adauga si hotel in aplicatie.
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -35,9 +37,21 @@ public class Main {
         Room room6 = new Room(210, 100.25, 2, Availability.YES);
         Room room7= new Room(205, 100.25, 1, Availability.YES);
 
+
         List<Room> rooms = new ArrayList<>(List.of(room1, room2, room3, room4, room5, room6));
 
         UserAdministrator userAdministrator = new UserAdministrator(rooms);
+        UserClient userClient = new UserClient("Popescu");
+        UserClient userClient2 = new UserClient("Georgescu");
+
+        //lista de rezervari
+        Reservation reservation1 = new Reservation(0001, room3,  userClient, LocalDate.parse("2023-01-07"),  LocalDate.parse("2023-01-15"));
+        Reservation reservation2 = new Reservation(0002, room6,  userClient, LocalDate.parse("2023-01-15"),  LocalDate.parse("2023-01-20"));
+
+        //lista de rezrvari
+        List<Reservation> reservations = new ArrayList<>();
+        reservations.add(reservation1);
+        reservations.add(reservation2);
 
         //adauga camera in lista de camere
         userAdministrator.addRoom(room7);
@@ -46,7 +60,7 @@ public class Main {
 
 
         //sterg o camera din lista de camere
-            // nu imi sterge camera
+            //camera cu numarul 2063 este stearsa
 
         userAdministrator.deleteRoom(room2);
         System.out.println(rooms);
@@ -66,9 +80,10 @@ public class Main {
         System.out.println("------------------");
 
         ////•	Sa vada cate camere sunt libere/ocupate pentru o anumita perioada
-            //nu afiseaza corect
-        userAdministrator.viewAvailabilityRoom();
-        System.out.println(rooms);
+            // deci ar trebui sa nu imi afiseze camera 3, 207, pentru ca nu este disponibila in acea perioada
+
+        userAdministrator.getAvailabilityRoom(001 LocalDate.parse("2023-01-07").atStartOfDay(), LocalDate.parse("2023-01-15").atStartOfDay());
+        System.out.println(reservations);
         System.out.println("------------------");
 
 

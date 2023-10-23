@@ -1,6 +1,9 @@
 package org.example;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,15 +38,19 @@ public class UserAdministrator {
         //sterg o camera din lista de camere
         //nu merge sa sterg o camera din lista de camere cu filtru
     public List<Room> deleteRoom(Room roomRemoved) {
-        //parcurg lista de camere si daca camera care este data ca parametru sa gaseste in lista de camere o sterg cu remove
-        // cu expresie lambda:
-            // fac un stream pe lista de camere si filtrez lista care nu contine acea camera, practic nu este o stergere
-            // ci construiesc o alta lista in  doar o lista
-            //folosesc removeALL si sterg din lista acea camera
-        List<Room> roomToBeRemoved = new ArrayList<>();
-        return roomToBeRemoved = rooms.stream()
-                .filter(room ->!(rooms.contains(roomRemoved)))
-                .collect(Collectors.toList());
+        // era o proprietate
+        //tu faci stream si procesezi lista ta, insa dupa ce iesi in stream, lista originala nu se modifica
+        //deci rooms nu se va modifica
+        //insa poti pur si simplu sa te folosesti de metode remove de la arraylist fara stream
+            //parcurg lista de camere si daca camera care este data ca parametru sa gaseste in lista de camere o sterg cu remove
+            // cu expresie lambda:
+                // fac un stream pe lista de camere si filtrez lista care nu contine acea camera, practic nu este o stergere
+                // ci construiesc o alta lista in  doar o lista
+                //folosesc removeALL si sterg din lista acea camera
+            if (rooms.contains(roomRemoved)) {
+                rooms.remove(roomRemoved);
+            }
+       return rooms;
     }
 
     ////•	Vizualizare camere
@@ -69,16 +76,34 @@ public class UserAdministrator {
     //ar trebui sa setez disponibilitatea camerei - >enum Availability si perioada?
     //fac 2 metode in care vad lista de camere in functie de parametru ?
 
-    public List<Room>  viewAvailabilityRoom () {
-        ///aici as putea sa ma folosesc de un colector
-        return rooms.stream()
-              .filter(room -> rooms.contains(Availability.YES)).toList();
+    //tu vezi daca o camera este disponibila intre doua date
+    //ar trebui ca acele doua date sa fie transmise ca parametru metodei
+    //prin 2 variabile de tip LocalDate (start si end) (edited)
+    //si cum stii ca o camera este rezervata?
+    //pai daca in lista de rezervari a camerei gasesti o rezervare care sa aiba checkout-ul dupa start si checkin-ul inainte de end
+
+    public List<Reservation>  getAvailabilityRoom (int reservedNo, LocalDate checkIn, LocalDate checkOut) {
+        List<Reservation>  availabilityRoom = new ArrayList<>();
+        //parcurg mai intai lista de camere si camere si apoi
+        //parcurg lista de rezervari si verific daca exita o rezervare in perioada repectiva atunci adug in lista
+        // doar rezervarile disponibile
+        // rezervarea sa aiba check in si check out egale cu datele date ca parametru
+
+        for (int i = 0; i < reservations.size(); i++) {
+           if (reservations.get(i).getReservedNo().equals(reservedNo);
+            if (!(reservations.get(i).getCheckIn().equals(checkIn) && reservations.get(i).getCheckOut().equals(checkOut))) {
+                availabilityRoom.add(reservations.get(i));
+            }
+        }
+       return availabilityRoom;
     }
 
     ////•	Sa vada care este pretul obtinut din toate rezervarile dintr-o anumita perioada
     //ar trebui sa fac o metoda care imi returneaza o valoare de tip double si in care dau ca parametru checkin si checkout
         //ar trebui sa verific care sunt camerele care sunt rezervate in acea perioada si fac o suma totala pe acele camere
         //cum fac asta?
+
+    //adica trebuie sa gasesti inainte rezervarile care sunt intr-o anumite perioada si apoi sa calculezi pretul
 
 
 }

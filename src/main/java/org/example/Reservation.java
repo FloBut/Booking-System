@@ -1,21 +1,25 @@
 package org.example;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 //O rezervare poate fi facuta pentru o camera, de catre un client, intre doua date (check in si check out).
 public class Reservation {
     private int reservationNo;
     private Room reservedNo;
     private UserClient user;
-    private int checkIn;
-    private int checkOut;
+    private LocalDate checkIn;
+    private LocalDate checkOut;
 
-    public Reservation(int reservationNo, Room reservedNo, UserClient user, int checkIn, int checkOut) {
+    public Reservation(int reservationNo, Room reservedNo, UserClient user, LocalDate checkIn, LocalDate checkOut) {
         this.reservationNo = reservationNo;
         this.reservedNo = reservedNo;
         this.user = user;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
     }
+
+
 
     public int getReservationNo() {
         return reservationNo;
@@ -41,19 +45,19 @@ public class Reservation {
         this.user = user;
     }
 
-    public int getCheckIn() {
+    public LocalDate getCheckIn() {
         return checkIn;
     }
 
-    public void setCheckIn(int checkIn) {
+    public void setCheckIn(LocalDate checkIn) {
         this.checkIn = checkIn;
     }
 
-    public int getCheckOut() {
+    public LocalDate getCheckOut() {
         return checkOut;
     }
 
-    public void setCheckOut(int checkOut) {
+    public void setCheckOut(LocalDate checkOut) {
         this.checkOut = checkOut;
     }
 }
