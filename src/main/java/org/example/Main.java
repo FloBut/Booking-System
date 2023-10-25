@@ -44,9 +44,10 @@ public class Main {
         UserClient userClient = new UserClient("Popescu");
         UserClient userClient2 = new UserClient("Georgescu");
 
-        //lista de rezervari
+        //lista de rezervari pentru client
         Reservation reservation1 = new Reservation(0001, room3,  userClient, LocalDate.parse("2023-01-07"),  LocalDate.parse("2023-01-15"));
         Reservation reservation2 = new Reservation(0002, room6,  userClient, LocalDate.parse("2023-01-15"),  LocalDate.parse("2023-01-20"));
+
 
         //lista de rezrvari
         List<Reservation> reservations = new ArrayList<>();
@@ -81,8 +82,9 @@ public class Main {
 
         ////•	Sa vada cate camere sunt libere/ocupate pentru o anumita perioada
             // deci ar trebui sa nu imi afiseze camera 3, 207, pentru ca nu este disponibila in acea perioada
+            //nu afiseaza
 
-        userAdministrator.getAvailabilityRoom(001,  LocalDate.parse("2023-01-07").atStartOfDay(), LocalDate.parse("2023-01-15").atStartOfDay());
+        userAdministrator.getAvailabilityRoom(LocalDate.parse("2023-01-07").atStartOfDay(), LocalDate.parse("2023-01-15").atStartOfDay());
         System.out.println(reservations);
         System.out.println("------------------");
 

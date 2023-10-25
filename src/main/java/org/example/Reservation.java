@@ -7,14 +7,14 @@ import java.util.Date;
 public class Reservation {
     private int reservationNo;
     private Room reservedNo;
-    private UserClient user;
+    private UserClient userClient;
     private LocalDate checkIn;
     private LocalDate checkOut;
 
     public Reservation(int reservationNo, Room reservedNo, UserClient user, LocalDate checkIn, LocalDate checkOut) {
         this.reservationNo = reservationNo;
         this.reservedNo = reservedNo;
-        this.user = user;
+        this.userClient = userClient;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
     }
@@ -37,13 +37,14 @@ public class Reservation {
         this.reservedNo = reservedNo;
     }
 
-    public UserClient getUser() {
-        return user;
+    public UserClient getUserClient() {
+        return userClient;
     }
 
-    public void setUser(UserClient user) {
-        this.user = user;
+    public void setUserClient(UserClient userClient) {
+        this.userClient = userClient;
     }
+
 
     public LocalDate getCheckIn() {
         return checkIn;

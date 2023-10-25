@@ -53,6 +53,7 @@ public class UserAdministrator {
     ////•	Vizualizare camere
         // ar trebui sa vad toate camerele practic sa returnez lista de camere ?
     public List<Room> viewRoom() {
+
         return rooms;
     }
 
@@ -69,34 +70,29 @@ public class UserAdministrator {
       }
       return rooms;
     }
-////•	Sa vada cate camere sunt libere/ocupate pentru o anumita perioada
-    //ar trebui sa setez disponibilitatea camerei - >enum Availability si perioada?
-    //fac 2 metode in care vad lista de camere in functie de parametru ?
-
+// atat userclientul tre sa vada lista de camere disponilbila cat si userAdministratorul
     //tu vezi daca o camera este disponibila intre doua date
     //ar trebui ca acele doua date sa fie transmise ca parametru metodei
     //prin 2 variabile de tip LocalDate (start si end) (edited)
     //si cum stii ca o camera este rezervata?
     //pai daca in lista de rezervari a camerei gasesti o rezervare care sa aiba checkout-ul dupa start si checkin-ul inainte de end
 
-    public List<Reservation>  getAvailabilityRoom (int reservedNo, LocalDateTime checkIn, LocalDateTime checkOut) {
+
+        public List<Reservation> getAvailabilityRoom (LocalDateTime checkIn, LocalDateTime checkOut) {
+        //voi return o lista de rezervari disponibile
         List<Reservation>  availabilityRoom = new ArrayList<>();
-        //parcurg mai intai lista de camere si camere si apoi
         //parcurg lista de rezervari si verific daca exita o rezervare in perioada repectiva atunci adug in lista
         // doar rezervarile disponibile
         // rezervarea sa aiba check in si check out egale cu datele date ca parametru
 
         for (int i = 0; i < reservations.size(); i++) {
-            if (reservations.size() - 1 != 0) {
-                if (reservations.get(i).getReservedNo().equals(reservedNo)) {
-                    if (!(reservations.get(i).getCheckIn().equals(checkIn) && reservations.get(i).getCheckOut().equals(checkOut))) {
-                        availabilityRoom.add(reservations.get(i));
-                    }
-                }
-            }
+            if (!(reservations.get(i).getCheckIn().equals(checkIn) && reservations.get(i).getCheckOut().equals(checkOut))) {
+                availabilityRoom.add(reservations.get(i));
         }
        return availabilityRoom;
     }
+
+
 
     ////•	Sa vada care este pretul obtinut din toate rezervarile dintr-o anumita perioada
     //ar trebui sa fac o metoda care imi returneaza o valoare de tip double si in care dau ca parametru checkin si checkout
@@ -107,7 +103,18 @@ public class UserAdministrator {
 
     //pentru pretul rezervarilor dintr-o anumita perioada
     //e cam similar
-    //adica trebuie sa gasesti inainte rezervarile care sunt intr-o anumite perioada si apoi sa calculezi pretul
 
+
+        public double getPricePerReservation() {
+            double totalPrice = 0.00;
+        //ma folosesc de lista returnata mai sus si pe acea lista fac calculul pentru camerele rezervate in acea perioada
+            List<Reservation> pricePerReservation = getAvailabilityRoom (LocalDateTime checkIn, LocalDateTime checkOut);
+            //parcurg lista si pentru fiecare rezervare calculez pretul
+        for (int i = 0; i < reservations.size(); i++) {
+           totalPrice += reservations.get(i).getReservedNo().pricePerRoom;
+        }
+        return totalPrice;
+
+        }
 
 }
