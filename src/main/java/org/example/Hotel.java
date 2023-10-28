@@ -3,17 +3,17 @@ package org.example;
 import java.util.List;
 
 public class Hotel {
-    List<Reservation> reservations;
+List<Room> rooms;
 
-    public Hotel(List<Reservation> reservations) {
-        this.reservations = reservations;
+    public Hotel(List<Room> rooms) {
+        this.rooms = rooms;
     }
 
-    public List<Reservation> getReservations() {
-        return reservations;
+    public List<Room> getRooms() {
+        return rooms;
     }
 
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
     }
 }

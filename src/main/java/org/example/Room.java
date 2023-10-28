@@ -53,6 +53,10 @@ public class Room  {
         this.reservation = reservation;
     }
 
+    // pe o camera vreau sa adaug o lista de rezervari cu ajutorul unei metode
+
+
+
     @Override
     public String toString() {
         return "Room{" +
