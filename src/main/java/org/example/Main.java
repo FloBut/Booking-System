@@ -101,9 +101,16 @@ public class Main {
 
         ////•daca camera data ca parametru este disponibila sau nu in acea perioada
 
+        // //[Reservation{reservedRoomNo=Room{roomNumber=207, pricePerRoom=1500.0, noPersonByRoom=2, reservation=[], availability=NO}, userClient=null, checkIn=2023-01-07, checkOut=2023-01-15}, Reservation{reservedRoomNo=Room{roomNumber=207, pricePerRoom=1500.0, noPersonByRoom=2, reservation=[], availability=NO}, userClient=null, checkIn=2023-05-07, checkOut=2023-05-15}]
+        //        //------------------
+        //        //
+
         userAdministrator.getAvailabilityRoom(room3, LocalDate.parse("2023-02-07"), LocalDate.parse("2023-02-15"));
         System.out.println(reservationList.toString());
         System.out.println("------------------");
+
+
+
 
 
 
