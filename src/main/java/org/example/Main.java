@@ -27,88 +27,192 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 import static java.time.LocalTime.parse;
 
 public class Main {
-    public static void main(String[] args) {
+                public static void main(String[] args) {
+                Scanner console = new Scanner(System.in);
 
-        //camerele
-        Room room1= new Room(205, 100.25, 2, Availability.YES);
-        Room room2 = new Room(206, 100.25, 2, Availability.YES);
-        Room room3 = new Room(207, 100.25, 2, Availability.NO);
-        Room room4= new Room(208, 100.25, 2, Availability.YES);
-        Room room5 = new Room(209, 100.25, 4, Availability.NO);
-        Room room6 = new Room(210, 100.25, 2, Availability.YES);
-        Room room7= new Room(205, 100.25, 1, Availability.YES);
+                Booking booking = new Booking();
 
-        //lista de camere
-        List<Room> rooms = new ArrayList<>(List.of(room1, room2, room3, room4, room5, room6));
+                Admin admin1 = new Admin("Pop", "Eugen");
+                booking.getUserList().add(admin1);
 
-        //lista de rezervari pentru o camera
-        List<Reservation> reservationList = new ArrayList<>();
+                Client client1 = new Client("Suciu", "Daniel");
+                booking.getUserList().add(client1);
 
-        Reservation reservation1 = new Reservation(room3, LocalDate.parse("2023-01-07"),  LocalDate.parse("2023-01-15"));
-        Reservation reservation2 = new Reservation(room3, LocalDate.parse("2023-05-07"),  LocalDate.parse("2023-05-15"));
+                Client client2 = new Client("Natea", "Valentina");
+                booking.getUserList().add(client2);
 
-        reservationList.add(reservation1);
-        reservationList.add(reservation2);
+                DB db = new DB();
+                db.createDataBase(booking);
 
-        //lista de rezervari ar trebui sa o adaug pe o camera ?
+                Admin admin = (Admin) booking.getUserList().get(0);
+                Client client = (Client) booking.getUserList().get(1);
 
-        //hotelul
-       Hotel hotel = new Hotel(rooms);
+                accessedAdminMenuInLoop(admin, booking.getHotelList().get(0), console);
 
-        UserAdministrator userAdministrator = new UserAdministrator(hotel);
-        UserClient userClient = new UserClient("Popescu");
-        UserClient userClient2 = new UserClient("Georgescu");
+                accessedClientMenuInLoop(client, booking, booking.getHotelList().get(0), console);
+            }
 
-        //adauga camera in lista de camere
-        userAdministrator.addRoom(room7);
-        System.out.println(rooms);
-        System.out.println("------------------");
+            public static void accessedAdminMenuInLoop(Admin admin, Hotel hotel, Scanner console) {
+                int option;
+                do {
+                    printAdminMenu();
+                    option = console.nextInt();
+                    performSelectedActionForAdmin(admin, hotel, option, console);
+                } while (option != 7);
+            }
 
+            public static void accessedClientMenuInLoop(Client client, Booking booking, Hotel hotel, Scanner console) {
+                int option;
+                do {
+                    printClientMenu();
+                    option = console.nextInt();
+                    performSelectedActionForClient(client, booking, hotel, option, console);
+                } while (option != 4);
+            }
 
-        //sterg o camera din lista de camere
-            //camera cu numarul 206 este stearsa
+            public static void performSelectedActionForAdmin(Admin admin, Hotel hotel, int option, Scanner console) {
+                switch (option) {
+                    case 1:
+                        System.out.println("Add a new hotel room ");
+                        System.out.println("Enter the room number");
+                        int roomNumber = console.nextInt();
+                        System.out.println("Enter the price per night of the room");
+                        int pricePerNight = console.nextInt();
+                        System.out.println("Enter the number of people who can stay in the room");
+                        int numberOfPerson = console.nextInt();
+                        Room room = new Room(roomNumber, pricePerNight, numberOfPerson);
+                        admin.addRoom(room, hotel);
+                        break;
+                    case 2:
+                        System.out.println("Enter the number of the room you want to delete ");
+                        roomNumber = console.nextInt();
+                        try {
+                            admin.removeRoom(roomNumber, hotel);
+                        } catch (RoomNotFoundException e) {
+                            System.out.println(e.getMessage());
+                        }
+                        break;
+                    case 3:
+                        admin.printAllRooms(hotel);
+                        break;
+                    case 4:
+                        System.out.println("Enter the number of the room you want to edit price ");
+                        roomNumber = console.nextInt();
+                        System.out.println("Enter the new price for the room ");
+                        int newPrice = console.nextInt();
+                        try {
+                            admin.editPriceOfRoom(hotel, roomNumber, newPrice);
+                        } catch (RoomNotFoundException e) {
+                            System.out.println(e.getMessage());
+                        }
+                        break;
+                    case 5:
+                        System.out.println("Enter the check-in date");
+                        String stringCheckIn = console.next();
+                        LocalDate checkIn = LocalDate.parse(stringCheckIn);
+                        System.out.println("Enter the check-out date");
+                        String stringCheckout = console.next();
+                        LocalDate checkOut = LocalDate.parse(stringCheckout);
+                        System.out.println(admin.getNumberOfAvailableRoomsBy(checkIn, checkOut, hotel));
+                        System.out.println("java8: " + admin.findNumberOfAvailableRoomsBy(checkIn, checkOut, hotel));
+                        break;
+                    case 6:
+                        System.out.println("Enter the check-in date");
+                        stringCheckIn = console.next();
+                        checkIn = LocalDate.parse(stringCheckIn);
+                        System.out.println("Enter the check-out date");
+                        stringCheckout = console.next();
+                        checkOut = LocalDate.parse(stringCheckout);
+                        System.out.println("The price obtained from all reservations for the entered period: " + admin.getPriceForAllReservationsBy(checkIn, checkOut, hotel));
+                        System.out.println("java8: " + admin.findPriceForAllReservationsBy(checkIn, checkOut, hotel));
+                        break;
+                    case 7:
+                        System.out.println("You have exited the admin menu");
+                        break;
+                    default:
+                        System.out.println("The entered option is invalid, try again!");
+                }
+            }
 
-        userAdministrator.deleteRoom(room2);
-        System.out.println(rooms);
-        System.out.println("------------------");
+            public static void performSelectedActionForClient(Client client, Booking booking, Hotel hotel, int option, Scanner console) {
+                switch (option) {
+                    case 1:
+                        System.out.println("Enter the check-in date");
+                        String stringCheckIn = console.next();
+                        LocalDate checkIn = LocalDate.parse(stringCheckIn);
+                        System.out.println("Enter the check-out date");
+                        String stringCheckout = console.next();
+                        LocalDate checkOut = LocalDate.parse(stringCheckout);
+                        System.out.println("Enter the number of people who can stay in the room");
+                        int numberOfPerson = console.nextInt();
+                        System.out.println("The list of available rooms during the period " + checkIn + " - " + checkOut + " are: ");
+                        System.out.println(client.getAvailableRoomsBy(checkIn, checkOut, numberOfPerson, booking));
+                        System.out.println("java8: " + client.findAvailableRoomsBy(checkIn, checkOut, numberOfPerson, booking));
+                        break;
+                    case 2:
+                        System.out.println("Enter the check-in date");
+                        stringCheckIn = console.next();
+                        checkIn = LocalDate.parse(stringCheckIn);
+                        System.out.println("Enter the check-out date");
+                        stringCheckout = console.next();
+                        checkOut = LocalDate.parse(stringCheckout);
+                        System.out.println("Enter the number of people who can stay in the room");
+                        numberOfPerson = console.nextInt();
+                        System.out.println("The sorted list with the available rooms by price for a certain period and a certain number of places is: ");
+                        System.out.println(client.getAvailableRoomsOrderedByPriceBy(checkIn, checkOut, numberOfPerson, booking));
+                        System.out.println("java8: " + client.findAvailableRoomsOrderedByPriceBy(checkIn, checkOut, numberOfPerson, booking));
+                        break;
+                    case 3:
+                        System.out.println("Enter the check-in date");
+                        stringCheckIn = console.next();
+                        checkIn = LocalDate.parse(stringCheckIn);
+                        System.out.println("Enter the check-out date");
+                        stringCheckout = console.next();
+                        checkOut = LocalDate.parse(stringCheckout);
+                        System.out.println("Enter the number of the room you want to book ");
+                        int roomNumber = console.nextInt();
+                        try {
+                            client.bookARoom(roomNumber, hotel, checkIn, checkOut);
+                        } catch (RoomNotFoundException e) {
+                            System.out.println(e.getMessage());
+                        }
+                        break;
+                    case 4:
+                        System.out.println("You have exited the client menu");
+                        break;
+                    default:
+                        System.out.println("The entered option is invalid, try again!");
+                }
+            }
 
-        ////•	Vizualizare camere
-            //afiseaza camerele
+            public static void printAdminMenu() {
+                System.out.println("ADMIN MENU:");
+                System.out.println("1. Add a new hotel room ");
+                System.out.println("2. Delete a room from the hotel ");
+                System.out.println("3. Show all hotel rooms ");
+                System.out.println("4. Edit the price of a hotel room ");
+                System.out.println("5. Shows how many rooms are free/occupied for a certain period ");
+                System.out.println("6. Shows the price obtained from all the reservations from a certain period ");
+                System.out.println("7. Exit the admin menu");
+                System.out.println("_________________________________________");
+                System.out.println("Choose the action with the number: ");
+            }
 
-        userAdministrator.viewRoom();
-        System.out.println(rooms);
-        System.out.println("------------------");
-
-        ////•	Editare pret camera
-            //modfifica pretul pe camera doar daca camera este disponibila - > camera nu este disp
-            // tre sa arunc o exceptie in aceasta metoda
-        userAdministrator.pricePerRoom(room3, 1500);
-        System.out.println(rooms);
-        System.out.println("------------------");
-
-        ////•	Editare pret camera
-        //modfifica pretul pe camera doar daca camera este disponibila
-        // pretul se modifica
-
-        userAdministrator.pricePerRoom(room1, 50000.00);
-        System.out.println(rooms);
-        System.out.println("------------------");
-
-        ////•daca camera data ca parametru este disponibila sau nu in acea perioada
-
-        // //[Reservation{reservedRoomNo=Room{roomNumber=207, pricePerRoom=1500.0, noPersonByRoom=2, reservation=[], availability=NO}, userClient=null, checkIn=2023-01-07, checkOut=2023-01-15}, Reservation{reservedRoomNo=Room{roomNumber=207, pricePerRoom=1500.0, noPersonByRoom=2, reservation=[], availability=NO}, userClient=null, checkIn=2023-05-07, checkOut=2023-05-15}]
-        //        //------------------
-        //        //
-
-        userAdministrator.getAvailabilityRoom(room3, LocalDate.parse("2023-02-07"), LocalDate.parse("2023-02-15"));
-        System.out.println(reservationList.toString());
-        System.out.println("------------------");
-
+            public static void printClientMenu() {
+                System.out.println("CLIENT MENU:");
+                System.out.println("1. Show the rooms that are available in a certain period");
+                System.out.println("2. Show the available rooms sorted by price for a certain period and a certain number of places");
+                System.out.println("3. Make a reservation for a specific room");
+                System.out.println("4. Exit the client menu");
+                System.out.println("_________________________________________");
+                System.out.println("Choose the action with the number: ");
+            }
 
 
 

@@ -1,8 +1,6 @@
 package org.example;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +14,7 @@ import java.util.List;
 ////•	Sa vada care este pretul obtinut din toate rezervarile dintr-o anumita perioada
 public class UserAdministrator {
 
-    private static Hotel hotel;
+    static Hotel hotel;
 
     public UserAdministrator(Hotel hotel) {
         this.hotel = hotel;
@@ -68,35 +66,6 @@ public class UserAdministrator {
         return hotel.rooms;
     }
 
-    //tu vezi daca o camera este disponibila intre doua date
-    //ar trebui ca acele doua date sa fie transmise ca parametru metodei
-    //prin 2 variabile de tip LocalDate (start si end) (edited)
-    //si cum stii ca o camera este rezervata?
-    //pai daca in lista de rezervari a camerei gasesti o rezervare care sa aiba checkout-ul dupa start si
-    // checkin-ul inainte de end
-
-
-    public List<Reservation> getAvailabilityRoom(Room reservedRoom, LocalDate checkIn, LocalDate checkOut) {
-        //voi return o lista de rezervari disponibile
-        List<Reservation> availabilityRoom = new ArrayList<>();
-        //parcurg lista de rezervari si verific daca exita o rezervare in perioada repectiva atunci adug in lista
-        // doar rezervarile disponibile
-        // rezervarea sa aiba check in si check out egale cu datele date ca parametru
-        for (Room r : hotel.getRooms()) {
-            if (r.equals(reservedRoom)) {
-                boolean isAvailable = true;
-                for (Reservation reservation : reservedRoom.getReservation()) {
-                    if (!(reservation.getCheckOut().isBefore(ChronoLocalDate.from(checkIn)) ||
-                            reservation.getCheckIn().isAfter(ChronoLocalDate.from(checkOut)))) {
-                        isAvailable = false;
-                        break;
-                    }
-                }
-                availabilityRoom.add(new Reservation(reservedRoom, checkIn, checkOut));
-            }
-        }
-        return availabilityRoom;
-    }
 }
 
 
