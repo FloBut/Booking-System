@@ -18,6 +18,18 @@ public class Admin  extends User {
         booking.getHotelList().add(hotel);
     }
 
+    public void printAllRooms(Hotel hotel) {
+        System.out.println(hotel.getRooms());
+    }
+
+    public void editPriceOfRoom(Hotel hotel, int numberRoom, int newPrice) throws RoomNotFoundException {
+        Room room = hotel.getRoomFromHotelByNumber(numberRoom);
+        if (room == null) {
+            throw new RoomNotFoundException("The room with numberRoom " + numberRoom + " is not in the hotel " + hotel.getHotelName());
+        }
+        hotel.getRooms().get(hotel.getRooms().indexOf(room)).setPricePerRoom(newPrice);
+    }
+
     //adaug o camera in lista de camere
 
     public void addRoom(Room room, Hotel hotel) {
@@ -35,7 +47,7 @@ public class Admin  extends User {
     }
 
 
-    //numarul de camere disponibile intr un hotel pe intr o perioada
+    //numarul de camere disponibile intr un hotel  intr o perioada
     public int getNumberOfAvailableRoomsBy(LocalDate checkIn, LocalDate checkOut, Hotel hotel) {
         int numberOfAvailableRooms = 0;
         for (Room room : hotel.getRooms()) {

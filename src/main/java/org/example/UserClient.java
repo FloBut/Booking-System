@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.lang.reflect.Array.get;
+import static org.example.UserAdministrator.hotel;
 
 ////Un utilizator are o lista de rezervari, nume, prenume.
 ////Clinetii vor putea sa:
@@ -83,8 +84,8 @@ public class UserClient extends User {
             // hotelul are o lista de camere, pe lista de camere obtin indexul camerei si din index obtin numarul camerei ,
             // de ce nu merge??
 
-        Reservation reservation = new Reservation(hotel.getRooms().get(indexOfRoom).getRoomNumber(), checkIn, checkOut);
-        reservationList.add(reservation);
-        hotel.getRooms().get(indexOfRoom).getReservationList().add(reservation);
+//        Reservation reservation = new Reservation(hotel.getRooms().get(indexOfRoom).getRoomNumber(), checkIn, checkOut);
+//        reservationList.add(reservation);
+//        hotel.getRooms().get(indexOfRoom).getReservationList().add(reservation);
     }
 }

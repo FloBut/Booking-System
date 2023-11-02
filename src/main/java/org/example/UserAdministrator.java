@@ -55,7 +55,7 @@ public class UserAdministrator {
     //pe o camera ar trebui sa mofific pretul - cum fac asta?
     //caut in lista de camere camera care o dau ca parametru si pentru acea camerea modific pretul
 // cu pretul primit ca parametru
-    public List<Room> pricePerRoom(Room roomModifiedPrice, double price) {
+    public List<Room> pricePerRoom(Room roomModifiedPrice, int price) {
         //&& hotel.rooms.get(i).availability.equals(Availability.YES
         for (int i = 0; i < hotel.rooms.size(); i++) {
             if (hotel.rooms.get(i).equals(roomModifiedPrice)) {
