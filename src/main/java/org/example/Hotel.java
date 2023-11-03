@@ -1,6 +1,9 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.List;
+
+//hotelul are un nume si o lista de camere
 
 public class Hotel {
     private String hotelName;
@@ -8,7 +11,7 @@ public class Hotel {
 
     public Hotel(String hotelName) {
         this.hotelName = hotelName;
-        this.rooms = rooms;
+        this.rooms = new ArrayList<>();
     }
 
     public String getHotelName() {
@@ -36,15 +39,27 @@ public class Hotel {
         }
         return null;
     }
-
     //metoda va returna indicele de camera pentru un numar de camera
+    //la ce folosesc acest indice?
 
     public int getIndexOfRoomFromHotelBy(int roomNumber) {
         for (int i = 0; i < rooms.size(); i++) {
-            if (getRooms().get(i).getRoomNumber() == roomNumber) {
+            if(rooms.get(i).getRoomNumber() == roomNumber) {
                 return i;
             }
+
         }
         return -1;
     }
+
+
+
+//    public int getIndexOfRoomFromHotelBy(int roomNumber) {
+//        for (int i = 0; i < rooms.size(); i++) {
+//            if (getRooms().get(i).getRoomNumber() == roomNumber) {
+//                return i;
+//            }
+//        }
+//        return -1;
+//    }
 }

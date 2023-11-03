@@ -69,14 +69,3 @@ public class UserAdministrator {
 }
 
 
-
-    ////•	Sa vada care este pretul obtinut din toate rezervarile dintr-o anumita perioada
-    //ar trebui sa fac o metoda care imi returnee o valoare de tip double si in care dau ca parametru checkin si checkout
-    //ar trebui sa verific care sunt camerele care sunt rezervate in acea perioada si fac o suma totala pe acele camere
-    //cum fac asta?
-
-//        public double getPricePerReservation(LocalDate checkIn, LocalDate checkOut) {
-//            double totalPrice = 0.00;
-//        //ma folosesc de lista returnata mai sus si pe acea lista fac calculul pentru camerele rezervate in acea perioada
-//            List<Reservation> pricePerReservation = getAvailabilityRoom (checkIn,checkOut);
-//            //parcurg lista si pentru fiecare camera care are o lisa de rezervari calculez pretul

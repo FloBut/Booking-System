@@ -80,7 +80,6 @@ public class Main {
         hotel1.getRooms().get(1).getReservationList().add(reservation2);
 
 
-
         UserAdministrator admin1 = new UserAdministrator(hotel1);
         booking.getUserList().add(admin1);
 
@@ -92,10 +91,11 @@ public class Main {
         UserClient userClient1 = new UserClient("Valeriu", "Costin");
 
 
-
-        accessedAdminMenuInLoop(admin, booking.getHotelList().get(0),console);
+        accessedAdminMenuInLoop(admin, booking.getHotelList().get(0), console);
+        console.close();
 
         accessedClientMenuInLoop(userClient1, booking, booking.getHotelList().get(0), console);
+        console.close();
     }
 
     public static void accessedAdminMenuInLoop(Admin admin, Hotel hotel, Scanner console) {
@@ -104,6 +104,7 @@ public class Main {
             printAdminMenu();
             performSelectedActionForAdmin(admin, hotel, option, console);
         } while (option != 7);
+        console.close();
     }
 
     public static void accessedClientMenuInLoop(UserClient client1, Booking booking, Hotel hotel, Scanner console) {
@@ -113,6 +114,7 @@ public class Main {
             option = 5;
             performSelectedActionForClient(client1, booking, hotel, option, console);
         } while (option != 4);
+        console.close();
     }
 
     public static void performSelectedActionForAdmin(Admin admin, Hotel hotel, int option, Scanner console) {
@@ -177,9 +179,10 @@ public class Main {
             default:
                 System.out.println("The entered option is invalid, try again!");
         }
+        console.close();
     }
 
-    public static void performSelectedActionForClient(UserClient client, Booking booking, Hotel hotel,int option, Scanner console) {
+    public static void performSelectedActionForClient(UserClient client, Booking booking, Hotel hotel, int option, Scanner console) {
         switch (option) {
             case 1:
                 System.out.println("Enter the check-in date");
@@ -228,6 +231,7 @@ public class Main {
             default:
                 System.out.println("The entered option is invalid, try again!");
         }
+        console.close();
     }
 
     public static void printAdminMenu() {
@@ -252,6 +256,4 @@ public class Main {
         System.out.println("_________________________________________");
         System.out.println("Choose the action with the number: ");
     }
-
-
 }

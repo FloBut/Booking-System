@@ -68,12 +68,9 @@ public class Room implements Comparable<Room> {
                 anyMatch(reservation -> reservation.getCheckOut().isAfter(checkIn) && reservation.getCheckIn().isBefore(checkOut));
     }
 
-    //   @Override
-    //    public int compareTo(Room anotherRoom) {
-    //        return Integer.compare(pricePerNight, anotherRoom.getPricePerNight());
-    //    }
 
-// pe o camera vreau sa adaug o lista de rezervari cu ajutorul unei metode
+
+// compar pretul unei camere cu pretul altei camere si voi returna camera cu pretul cel mai mic
 
 
 

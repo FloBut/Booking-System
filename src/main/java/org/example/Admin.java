@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 import static org.example.UserAdministrator.hotel;
-
+//administratorl hotelului
 public class Admin  extends User {
 
 
@@ -17,11 +17,11 @@ public class Admin  extends User {
     public void addHotel(Hotel hotel, Booking booking) {
         booking.getHotelList().add(hotel);
     }
-
+    //afisez camerele hotelului
     public void printAllRooms(Hotel hotel) {
         System.out.println(hotel.getRooms());
     }
-
+    //modific pretul unei camere
     public void editPriceOfRoom(Hotel hotel, int numberRoom, int newPrice) throws RoomNotFoundException {
         Room room = hotel.getRoomFromHotelByNumber(numberRoom);
         if (room == null) {
@@ -64,12 +64,15 @@ public class Admin  extends User {
         return numberOfAvailableRooms;
     }
 
+    //varaianta cu stream pe lista de camere a unui hotel filtrez camerele care nu sunt
+    // rezervate in perioada selectata ca parametru in metoda
+
     public long findNumberOfAvailableRoomsBy(LocalDate checkIn, LocalDate checkOut, Hotel hotel) {
         return hotel.getRooms().stream()
                 .filter(room -> !room.isReservedRoomBetween(checkIn, checkOut))
                 .count();
     }
-
+//pretul obtinunt pentru o perioada data pe un hotel
     public long getPriceForAllReservationsBy(LocalDate checkIn, LocalDate checkOut, Hotel hotel) {
         long totalPrice = 0;
         long numberOfDaysReservedForTheRoom;
@@ -83,6 +86,8 @@ public class Admin  extends User {
         }
         return totalPrice;
     }
+    //varianta cu stream pe lista de camere si returnez pretul total
+    // obtinut pentru o lista de camere rezervate
 
     public Integer findPriceForAllReservationsBy(LocalDate checkIn, LocalDate checkOut, Hotel hotel) {
         return hotel.getRooms().stream()
