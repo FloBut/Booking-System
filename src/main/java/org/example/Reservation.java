@@ -5,34 +5,26 @@ import java.time.LocalDateTime;
 
 //O rezervare poate fi facuta pentru o camera, de catre un client, intre doua date (check in si check out).
 public class Reservation {
-    private Room reservedRoomNo;
-    private UserClient userClient;
+    private Integer reservedRoomNo;
     private LocalDate checkIn;
     private LocalDate checkOut;
 
-    public Reservation(Room reservedRoomNo,LocalDate checkIn, LocalDate checkOut) {
+    public Reservation(Integer reservedRoomNo,LocalDate checkIn, LocalDate checkOut) {
         this.reservedRoomNo = reservedRoomNo;
-        this.userClient = userClient;
+
         this.checkIn = checkIn;
         this.checkOut = checkOut;
     }
 
 
-    public Room getReservedRoomNo() {
+    public Integer getReservedRoomNo() {
         return reservedRoomNo;
     }
 
-    public void setReservedNo(Room reservedNo) {
+    public void setReservedNo(Integer reservedNo) {
         this.reservedRoomNo = reservedRoomNo;
     }
 
-    public UserClient getUserClient() {
-        return userClient;
-    }
-
-    public void setUserClient(UserClient userClient) {
-        this.userClient = userClient;
-    }
 
 
     public LocalDate getCheckIn() {
@@ -55,7 +47,6 @@ public class Reservation {
     public String toString() {
         return "Reservation{" +
                 "reservedRoomNo=" + reservedRoomNo +
-                ", userClient=" + userClient +
                 ", checkIn=" + checkIn +
                 ", checkOut=" + checkOut +
                 '}';

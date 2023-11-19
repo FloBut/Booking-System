@@ -7,8 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.lang.reflect.Array.get;
-import static org.example.UserAdministrator.hotel;
+
 
 ////Un utilizator are o lista de rezervari, nume, prenume.
 ////Clinetii vor putea sa:
@@ -17,75 +16,87 @@ import static org.example.UserAdministrator.hotel;
 ////•	Sorteze disponibilitatile (camerele libere) dupa pret pentru o anumita perioada si un anumit numar de locuri
 ////•	Faca o rezervare pentru o anumita camera
 public class UserClient extends User {
-    public UserClient(String lastName, String firstName) {
-        super(lastName, firstName);
+
+    List<Reservation> reservationList;
+    public UserClient(String name) {
+        super(name);
+        this.reservationList=new ArrayList<>();
     }
 
-    public List<Room> getAvailabilityRoom(LocalDate checkIn, LocalDate checkOut,int numberOfPerson, Booking booking) {
+    public List<Reservation> getReservationList() {
+        return reservationList;
+    }
+
+    public void setReservationList(List<Reservation> reservationList) {
+        this.reservationList = reservationList;
+    }
+
+    public List<Room> getAvailabilityRoom(LocalDate checkIn, LocalDate checkOut, int numberOfPerson, Hotel hotel) {
         //voi return o lista de rezervari disponibile
         List<Room> availabilityRoom = new ArrayList<>();
         //parcurg lista de rezervari si verific daca exita o rezervare in perioada repectiva atunci adug in lista
         // doar rezervarile disponibile
         // rezervarea sa aiba check in si check out egale cu datele date ca parametru
-        for (Hotel hotel : booking.getHotelList()) {
-            for (Room room: hotel.getRooms()) {
-                if (room.getNoPersonByRoom() == numberOfPerson) {
-                    if (room.getReservationList().isEmpty()) {
-                        availabilityRoom.add(room);
-                    } else {
-                        for (Reservation reservation: room.getReservationList()) {
-                            if (reservation.getCheckOut().isBefore(checkIn) && reservation.getCheckIn().isAfter(checkOut)) {
-                                availabilityRoom.add(room);
-                            }
-                        }
-                    }
+
+        for (Room room : hotel.getRooms()) {
+            if (room.getNoPersonByRoom() == numberOfPerson) {
+                if (room.getReservationList().isEmpty()) {
+                    availabilityRoom.add(room);
+                } else if (!room.isReservedRoomBetween(checkIn, checkOut)) {
+                    availabilityRoom.add(room);
                 }
             }
         }
-        return availabilityRoom;
+        return  availabilityRoom;
+
     }
+
+
+
+
+
 
 //aceasi metoda folosind expresii lambda
 
-    public List<Room> findAvailableRoomsBy(LocalDate checkIn, LocalDate checkOut, int numberOfPerson, Booking booking) {
-        return booking.getHotelList().stream()
-                .flatMap(hotel -> hotel.getRooms().stream())
+    public List<Room> findAvailableRoomsBy(LocalDate checkIn, LocalDate checkOut, int numberOfPerson, Hotel hotel) {
+        return  hotel.getRooms().stream()
                 .filter(room -> !room.isReservedRoomBetween(checkIn, checkOut) && room.getNoPersonByRoom() == numberOfPerson)
                 .collect(Collectors.toList());
     }
 // metoda sorteaza crescator  in functie de pret lista de camere disponibile
 
-    public List<Room> getAvailableRoomsOrderedByPriceBy(LocalDate checkIn, LocalDate checkOut, int numberOfPerson, Booking booking) {
-        List<Room> sortedListOfAvailableRooms = getAvailabilityRoom(checkIn, checkOut, numberOfPerson, booking);
-        Collections.sort(sortedListOfAvailableRooms);
-        return sortedListOfAvailableRooms;
+    public List<Room> getAvailableRoomsOrderedByPriceBy(LocalDate checkIn, LocalDate checkOut, int numberOfPerson, Hotel hotel) {
+        List<Room> listOfAvailableRooms = findAvailableRoomsBy(checkIn, checkOut, numberOfPerson, hotel);
+        Collections.sort(listOfAvailableRooms);
+        //listOfAvailableRooms.sort((r1,r2)-> Integer.compare(r1.getPricePerRoom(), r2.getPricePerRoom()));
+        return listOfAvailableRooms;
     }
 
 
     //varianta de sortare crescatoare a preturilor camerelor dupa aexpresii lamba
-    public List<Room> findAvailableRoomsOrderedByPriceBy(LocalDate checkIn, LocalDate checkOut, int numberOfPerson, Booking booking) {
-        List<Room> collect = booking.getHotelList().stream()
-                .flatMap(hotel -> hotel.getRooms().stream())
-                .filter(room -> !room.isReservedRoomBetween(checkIn, checkOut) && room.getNoPersonByRoom() == numberOfPerson)
-                .sorted(Comparator.comparingInt(Room::getPricePerRoom))
-                .collect(Collectors.toList());
-        return collect;
-    }
+//    public List<Room> findAvailableRoomsOrderedByPriceBy(LocalDate checkIn, LocalDate checkOut, int numberOfPerson) {
+//        List<Room> collect = booking.getHotelList().stream()
+//                .flatMap(hotel -> hotel.getRooms().stream())
+//                .filter(room -> !room.isReservedRoomBetween(checkIn, checkOut) && room.getNoPersonByRoom() == numberOfPerson)
+//                .sorted(Comparator.comparingInt(Room::getPricePerRoom))
+//                .collect(Collectors.toList());
+//        return collect;
+//    }
 
     //metoda de rezervare a unei camere in cazul in care camera nu exista (nu am index > 0) ATUNCI RETURNEZ O EXEPTIE decat
 
-    public void bookARoom(int roomNumber, Hotel hotel, LocalDate checkIn, LocalDate checkOut) throws RoomNotFoundException {
-        int indexOfRoom = hotel.getIndexOfRoomFromHotelBy(roomNumber);
-        if (indexOfRoom == -1) {
-            throw new RoomNotFoundException("The room with numberRoom " + roomNumber + " is not in the hotel " + hotel.getHotelName());
+    public Reservation bookARoom(int roomNumber, Hotel hotel, LocalDate checkIn, LocalDate checkOut) throws Exception {
+        //caut camera care are roomNumber in hotel
+        Room room = hotel.findRoomByNumber(roomNumber);
+        //verific daca camera e disponibila
+        if (room.isReservedRoomBetween(checkIn, checkOut)){
+            throw new Exception("room already booked");
         }
-
-        // AICI NU INTELEG  FACE O REZERVARE : hotel.getRooms().get(indexOfRoom).getRoomNumber() - >
-            // hotelul are o lista de camere, pe lista de camere obtin indexul camerei si din index obtin numarul camerei ,
-            // de ce nu merge??
-
-//        Reservation reservation = new Reservation(hotel.getRooms().get(indexOfRoom).getRoomNumber(), checkIn, checkOut);
-//        reservationList.add(reservation);
-//        hotel.getRooms().get(indexOfRoom).getReservationList().add(reservation);
+        Reservation reservation = new Reservation(roomNumber, checkIn, checkOut);
+        room.getReservationList().add(reservation);
+        this.reservationList.add(reservation);
+        //creez o rezervare pentru camera mea
+            //adaug rezervarea in lista de rezervari a camerei
+        return reservation;
     }
 }

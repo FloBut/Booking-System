@@ -6,50 +6,43 @@ import java.util.List;
 
 //O camera are numar, pret pe noapte, numar de persoane care pot fi cazate si o lista de rezervari
 public class Room implements Comparable<Room> {
-    private int roomNumber;
-    private int pricePerRoom;
-    private int noPersonByRoom;
-    private String hotelName = "";
+    private Integer roomNumber;
+    private Integer pricePerRoom;
+    private Integer noPersonByRoom;
     private List<Reservation> reservationList = new ArrayList<>();
 
-    public Room(Integer roomNumber, int pricePerRoom, Integer noPersonByRoom) {
+    public Room(Integer roomNumber, Integer pricePerRoom, Integer noPersonByRoom) {
         this.roomNumber = roomNumber;
         this.pricePerRoom = pricePerRoom;
         this.noPersonByRoom = noPersonByRoom;
         this.reservationList = new ArrayList<>();
     }
 
-    public int getRoomNumber() {
+    public Integer getRoomNumber() {
         return roomNumber;
     }
 
-    public void setRoomNumber(int roomNumber) {
+    public void setRoomNumber(Integer roomNumber) {
         this.roomNumber = roomNumber;
     }
 
-    public int getPricePerRoom() {
+    public Integer getPricePerRoom() {
         return pricePerRoom;
     }
 
-    public void setPricePerRoom(int pricePerRoom) {
+    public void setPricePerRoom(Integer pricePerRoom) {
         this.pricePerRoom = pricePerRoom;
     }
 
-    public int getNoPersonByRoom() {
+    public Integer getNoPersonByRoom() {
         return noPersonByRoom;
     }
 
-    public void setNoPersonByRoom(int noPersonByRoom) {
+    public void setNoPersonByRoom(Integer noPersonByRoom) {
         this.noPersonByRoom = noPersonByRoom;
     }
 
-    public String getHotelName() {
-        return hotelName;
-    }
 
-    public void setHotelName(String hotelName) {
-        this.hotelName = hotelName;
-    }
 
     public List<Reservation> getReservationList() {
         return reservationList;

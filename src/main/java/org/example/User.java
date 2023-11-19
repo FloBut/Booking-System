@@ -5,47 +5,27 @@ import java.util.List;
 //clasa utilizator are un nume si prenume si o lista de rezervari
 //utlizatorulpoate fi client
 public class User {
-    private String lastName;
-    private String firstName;
-    List<Reservation> reservationList;
+    private String name;
 
 
-    public User(String lastName, String firstName) {
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.reservationList = new ArrayList<>();
+    public User(String name) {
+        this.name = name;
+
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getName() {
+
+        return name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public List<Reservation> getReservationList() {
-        return reservationList;
-    }
-
-    public void setReservationList(List<Reservation> reservationList) {
-        this.reservationList = reservationList;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "lastName='" + lastName + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", reservationList=" + reservationList +
+                "lastName='" + name + '\'' +
                 '}';
     }
 }
