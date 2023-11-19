@@ -3,7 +3,7 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 //clasa utilizator are un nume si prenume si o lista de rezervari
-//utlizatorulpoate fi client
+//utlizatorul poate fi client
 public class User {
     private String name;
 
@@ -14,7 +14,6 @@ public class User {
     }
 
     public String getName() {
-
         return name;
     }
 

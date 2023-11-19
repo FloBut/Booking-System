@@ -11,7 +11,6 @@ public class Reservation {
 
     public Reservation(Integer reservedRoomNo,LocalDate checkIn, LocalDate checkOut) {
         this.reservedRoomNo = reservedRoomNo;
-
         this.checkIn = checkIn;
         this.checkOut = checkOut;
     }

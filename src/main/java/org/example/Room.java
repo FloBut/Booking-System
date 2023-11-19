@@ -72,8 +72,6 @@ public class Room implements Comparable<Room> {
         return Integer.compare(pricePerRoom, anotherRoom.getPricePerRoom());
     }
 
-
-
     @Override
     public String toString() {
         return "Room{" +

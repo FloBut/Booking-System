@@ -15,22 +15,18 @@ public class Hotel {
     }
 
     public String getHotelName() {
-
         return hotelName;
     }
 
     public void setHotelName(String hotelName) {
-
         this.hotelName = hotelName;
     }
 
     public List<Room> getRooms() {
-
         return rooms;
     }
 
     public void setRooms(List<Room> rooms) {
-
         this.rooms = rooms;
     }
 
@@ -43,10 +39,8 @@ public class Hotel {
         }
         throw  new Exception("not found");
     }
-    //metoda va returna indicele de camera pentru un numar de camera
-    //la ce folosesc acest indice?
 
-
+    //aceeasi metoda folosind expresii lamba
 
     public Room findRoomByNumber (Integer roomNumber) throws Exception {
        return  rooms.stream()

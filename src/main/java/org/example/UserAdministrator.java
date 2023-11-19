@@ -22,12 +22,10 @@ public class UserAdministrator extends User {
         this.hotel = hotel;
     }
     public  Hotel getHotel() {
-
         return this.hotel;
     }
 
     public  void setHotel(Hotel hotel) {
-
         this.hotel = hotel;
     }
 
@@ -112,9 +110,6 @@ public class UserAdministrator extends User {
                 .reduce((0), (sum, room) -> sum + (room.getRoomNumber() * (int) (ChronoUnit.DAYS.between(checkIn, checkOut))), Integer::sum);
 
     }
-
-
-
 }
 
 
